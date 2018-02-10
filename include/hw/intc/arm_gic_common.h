@@ -79,6 +79,7 @@ typedef struct GICState {
     uint8_t sgi_pending[GIC_NR_SGIS][GIC_NCPU];
 
     uint16_t priority_mask[GIC_NCPU];
+    uint32_t basepri;
     uint16_t running_priority[GIC_NCPU];
     uint16_t current_pending[GIC_NCPU];
 

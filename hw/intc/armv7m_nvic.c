@@ -368,6 +368,20 @@ int armv7m_nvic_complete_irq(void *opaque, int irq)
     return ret;
 }
 
+
+/* Re-evaluate interrupts if BASEPRI register has changed */
+void armv7m_nvic_basepri_write(void *opaque, uint32_t val)
+{
+    nvic_state *nv = (nvic_state *)opaque;
+    GICState *s = &nv->gic;
+
+    if (val != s->basepri) {
+        s->basepri = val;
+        gic_update(s);
+    }
+}
+
+
 /* callback when external interrupt line is changed */
 static void set_irq_level(void *opaque, int n, int level)
 {
